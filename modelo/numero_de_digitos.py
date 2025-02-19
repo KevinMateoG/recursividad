@@ -1,4 +1,3 @@
-from random import randint
 def contar_digitos(num: int, contador:int=0) -> int:
     if num < 0:
         num = num*-1
