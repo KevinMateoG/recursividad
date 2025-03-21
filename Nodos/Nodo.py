@@ -16,15 +16,18 @@ def imprimir_todos_los_nodos(nodo: Node):
         nodo = nodo.next
 
 def buscar_elemento(nodo: Node, numero_buscar: int):
-    while nodo.value != numero_buscar:
-        if nodo.value == None:
-            return False
-        nodo.value = nodo.next
-    return True
+    while nodo != None:
+        if nodo.value == numero_buscar:
+            return True
+        nodo = nodo.next
+    return False
 
 
-def agregar_final():
-    ...
+def agregar_final(nodo: Node, valor):
+    while nodo != None:
+        nodo = nodo.next
+"""    return nodo.next = valor"""
+    
 a = Node(10)
 b = Node(7)
 c = Node(1)
@@ -36,5 +39,5 @@ b.next = c
 c.next = d
 d.next = e
 e.next = f
-imprimir_todos_los_nodos(a)
-print(buscar_elemento(a, 50))
+"""imprimir_todos_los_nodos(a)"""
+print(buscar_elemento(a, 9))
