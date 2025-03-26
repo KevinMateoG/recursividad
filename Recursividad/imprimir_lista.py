@@ -1,4 +1,4 @@
-from pilas import *
+from Recursividad.pilas import *
 
 def imprimir_elementos_de_lista(pila: Stack):
     aux = Stack()
