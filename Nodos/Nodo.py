@@ -50,9 +50,6 @@ class LinkedList:
     def delete_first(self):
         if(self.__size == 0):
             return
-        elif(self.__size == 1):
-            self.__head = None
-            self.__head.next = None
         else:
             self.__head.value = None
             self.__head.next = None
