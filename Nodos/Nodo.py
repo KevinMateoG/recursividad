@@ -8,12 +8,53 @@ class Node:
 
 class LinkedList:
     def __init__(self):
-        self.head: Node = None
-        self.tail: Node = None
-        self.size = 0
+        self.__head: Node = None
+        self.__tail: Node = None
+        self.__size: int = 0
+
 
     def append(self, value):
-        ...
+        new_node = Node(value)
+        if(self.__size == 0):
+            self.__head = new_node #d1
+            self.__tail = new_node #d1
+        else:
+            self.__tail.next = new_node
+            self.__tail = new_node
+        self.__size += 1
+
+    def traverse(self, current_node=None, flag = True):
+        if(flag):
+            current_node = self.__head
+        if(current_node is None):
+            return
+        print(current_node.value)
+        current_node = current_node.next
+        self.traverse(current_node, False)
+
+    def delete_end(self):
+        if(self.__size == 0):
+            return
+        elif(self.__size == 1):
+            self.__head = None
+            self.__tail = None
+        else:
+            #tengo que llegar al penúltimo
+            current_node = self.__head
+            while(current_node.next.next is not None):
+                current_node = current_node.next
+            current_node.next = None
+            self.__tail = current_node
+        self.__size -= 1
+
+    def __repr__(self):
+        repr = ""
+        current_node = self.__head
+        while(current_node is not None):
+            repr += str(current_node.value) + "->"
+            current_node = current_node.next
+
+        return f"{repr}"
 
 def imprimir_todos_los_nodos(nodo: Node):
     while nodo != None:
