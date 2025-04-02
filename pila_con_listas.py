@@ -12,13 +12,13 @@ class Queue:
 
     # retorna y elimina el primer elemento que entró
     def dequeue(self) -> int:
-        if(len(self.__queue) == 0):
+        if(self.__queue.__size == 0):
             raise EmptyQueue("Cola Vacía...")
-        return self.__queue.pop(0)
+        return self.__queue.delete_first()
 
     # retorna el primer elemento que entró
     def first(self) -> int:
-        if(len(self.__queue) == 0):
+        if(self.__queue.__size == 0):
             raise EmptyQueue("Cola Vacía...")
         return self.__queue[0]
 
