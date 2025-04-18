@@ -11,7 +11,7 @@ class Linklist:
         self.__size: int = 0
     
     def append(self, value):
-        new_node = Node(value)
+        new_node: Node = Node(value)
         if self.__size == 0:
             self.__head = new_node
             self.__tail = new_node
@@ -19,20 +19,29 @@ class Linklist:
             self.__tail.next = new_node
             self.__tail = new_node
         self.__size += 1
-
-    def delet_end(self):
+    
+    def deleat_end(self):
+        current = self.__head
         if self.__size == 0:
-            print("no hay nada")
+            return "no hay nada"
         elif self.__size == 1:
             self.__head = None
             self.__tail = None
         else:
-            current_node = self.__head
-            while current_node.next.next is not None:
-                current_node = current_node.next
-            current_node.next = None
-            self.__tail = None
+            while current.next.next is not None:
+                current = current.next
+            current.next = None
+            self.__tail = current
         self.__size -= 1
+    
+    def travers (self):
+        current = self.__head
+        if self.__size == 0:
+            return
+        print(current.value)
+        while current.next is not None:
+            current = current.next
+            print(current.value)
 
     def __repr__(self):
         rep = ""
@@ -44,8 +53,8 @@ class Linklist:
 
 ll = Linklist()
 ll.append(1)
-ll.append(5)
-ll.append(7)
 ll.append(8)
-ll.delet_end()
+ll.append(7)
+ll.deleat_end()
+ll.travers()
 print(ll)

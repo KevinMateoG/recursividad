@@ -62,7 +62,6 @@ class LinkedList:
         while(current_node is not None):
             repr += str(current_node.value) + "->"
             current_node = current_node.next
-
         return f"{repr}"
 
 def imprimir_todos_los_nodos(nodo: Node):
@@ -77,14 +76,6 @@ def buscar_elemento(nodo: Node, numero_buscar: int):
         nodo = nodo.next
     return False
 
-
-def agregar_final(nodo: Node, valor):
-    while nodo != None:
-        nodo = nodo.next
-    if nodo == None:
-        nodo = valor
-    return nodo
-
 a = Node(10)
 b = Node(7)
 c = Node(1)
@@ -98,4 +89,3 @@ d.next = e
 e.next = f
 imprimir_todos_los_nodos(a)
 print(buscar_elemento(a, 9))
-print(agregar_final(a, 8))
