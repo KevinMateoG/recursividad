@@ -42,7 +42,7 @@ class Linklist:
         while current.next is not None:
             current = current.next
             print(current.value)
-
+    
     def __repr__(self):
         rep = ""
         current_node = self.__head
