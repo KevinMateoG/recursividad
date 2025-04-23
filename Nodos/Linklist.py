@@ -43,6 +43,20 @@ class Linklist:
             current = current.next
             print(current.value)
     
+    def invertir_lista(self):
+        anterior = None
+        actual = self.__head
+        self.__tail = self.__head 
+
+        while actual:
+            siguiente = actual.next
+            actual.next = anterior
+            anterior = actual
+            actual = siguiente
+
+        self.__head = anterior
+
+
     def __repr__(self):
         rep = ""
         current_node = self.__head
@@ -57,5 +71,5 @@ ll.append(8)
 ll.append(7)
 ll.deleat_end()
 ll.travers()
-ll.invertir_lista_enlazada()
+print(ll.invertir_lista())
 print(ll)
