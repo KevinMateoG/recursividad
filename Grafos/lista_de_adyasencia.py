@@ -22,7 +22,7 @@ class Graph:
         if direct:
             if vertex1 not in self.adj_list[vertex2]:
                 self.adj_list[vertex2].append(w)
-
+        
         w = vertex2 if wigth is None else (vertex2, wigth)
         self.adj_list[vertex1].append(w)
 
