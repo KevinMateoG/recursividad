@@ -33,7 +33,21 @@ class Graph:
             self.adj_matrix[pos_vertex2][pos_vertex1] = w
             
         self.adj_matrix[pos_vertex1][pos_vertex2] = w
+    
+    def dfs(self, start):
+        visitado = []
+        recorrido = self.dfs_estructura(start, visitado)
+        return recorrido
 
+    def dfs_estructura(self, start, vistado: list, cont = 0):
+        if start not in vistado:
+            vistado.append(start)
+        
+        for i in self.adj_list[start]:
+            self.dfs_estructura(i, vistado)
+        return vistado
+    def verificar_str(self, palabra):
+            ...
     def __repr__(self):
         rep_str = ""
         for i in self.adj_matrix:
