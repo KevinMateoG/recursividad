@@ -1,3 +1,4 @@
+global cont 
 class Graph:
     def __init__(self):
         self.adj_list: dict[int, list[int]] = {}
@@ -72,12 +73,116 @@ class Graph:
         cont += 1
         if self.verificar_str(palabra, formar, cont, visitado, por_visitar):
             return True
+        return False
+    
+    def verificar_ciclos(self, value, visitado: list=[], padre=None):
+        visitado.append(value)
+        for vecino in self.adj_list[value]:
+            if vecino not in visitado:
+                if self.verificar_ciclos(vecino, visitado, value):
+                    return True
+            if vecino == padre:
+                return True
+        return False
+    
+    def contar_ciclos(self, value, visitado: list=[], padre=None, cont = 0):
+        visitado.append(value)
+        for vecino in self.adj_list[value]:
+            if vecino not in visitado:
+                if self.verificar_ciclos(vecino, visitado, value, cont+1)[0]:
+                    return (True, cont+1)
+            
+            if vecino == padre:
+                return (True, cont+1)
+        return (False,cont)
+    
+    def tiene_ciclo(self):
+        for vertice in self.adj_list:
+            if self.verificar_ciclos(vertice):
+                
+                return True
+    
+    def cont_ciclo(self):
+        for vertice in self.adj_list:
+            if self.contat:
+                
+                return True
+    
+    def grado_nodo(self, nodo_elegido, cont=0, entrad=True):
+        if nodo_elegido not in self.adj_list:
+            return 
+        if entrad is True:
+            for nodo in self.adj_list:
+                if nodo_elegido in self.adj_list[nodo]:
+                    cont+=1
+            return cont
+        else:
+            return len(self.adj_list[nodo_elegido])
 
+    def eliminar_nodo(self, nodo_eliminar):
+        if nodo_eliminar not in self.adj_list:
+            return 
+        self.adj_list.pop(nodo_eliminar)
+        for node in self.adj_list:
+            if nodo_eliminar in self.adj_list[node]:
+                self.adj_list[node].remove(nodo_eliminar)
+        
+        return self.adj_list
+    
+    def primer_conjunto(self):
+        a_visitar = []
+        cont = 0
+        
+        for i in self.adj_list:
+            print(a_visitar)
+            if i not in a_visitar:
+                cont += 1
+                a_visitar.extend(self.conjunto(i))
+        return cont
+    
+    def conjunto(self, inicio, visitado=[]):
+        if inicio in visitado:
+            return visitado
+        visitado.append(inicio)
+        for node in self.adj_list[inicio]:
+            self.conjunto(node)
+        return visitado
+
+            
+    
     def __repr__(self):
         return str(self.adj_list)
 
 g = Graph()
-g.add_vertex("h")
+g.add_vertex("A")
+g.add_vertex("E")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
+g.add_edge("A", "E", True)
+g.add_edge("A", "B", True)
+g.add_edge("E", "B", True)
+g.add_edge("C", "E", True)
+g.add_edge("C", "C", True)
+g.add_edge("D", "C", True)
+# 5 + 3
+
+"""g.add_vertex("a")
+g.add_vertex("b")
+g.add_vertex("d")
+g.add_vertex("c")
+g.add_vertex("e")
+g.add_vertex("x")
+g.add_edge("a", "b")
+g.add_edge("b", "d")
+g.add_edge("d", "b")
+g.add_edge("b", "e")
+g.add_edge("e", "c")
+g.add_edge("e", "b")
+g.add_edge("c", "x")
+g.add_edge("c", "d")
+g.add_edge("d", "a")"""
+"""g.add_vertex("h")
 g.add_vertex("o")
 g.add_vertex("l")
 g.add_vertex("a")
@@ -91,6 +196,7 @@ g.add_edge("o","x")
 g.add_edge("x", "h")
 g.add_edge("l", "a")
 g.add_edge("a", "o")
-g.add_edge("a", "l")
+g.add_edge("a", "l")"""
+
 print(g)
-print(g.verificar_str("hox"))
+print(g.primer_conjunto())

@@ -39,15 +39,41 @@ class Graph:
         recorrido = self.dfs_estructura(start, visitado)
         return recorrido
 
-    def dfs_estructura(self, start, vistado: list, cont = 0):
+    def dfs_estructura(self, start, vistado: list):
         if start not in vistado:
             vistado.append(start)
         
         for i in self.adj_list[start]:
             self.dfs_estructura(i, vistado)
         return vistado
+    
     def verificar_str(self, palabra):
             ...
+    
+    def grado_nodo(self, nodo_elegido, cont =0):
+        if nodo_elegido not in self.Nodes:
+            return
+        pos = self.Nodes.index(nodo_elegido)
+        for idx in self.adj_matrix:
+            if idx[pos] != 0:
+                cont += 1
+        return cont
+
+    def grado_salida(self, nodo_elegido, cont = 0):
+        pos = self.Nodes.index(nodo_elegido)
+        for node in self.adj_matrix[pos]:
+            if node != 0:
+                cont += 1
+        return cont
+    
+    def eliminar_nodo(self, nodo_eliminar):
+        pos = self.Nodes.index(nodo_eliminar)
+        self.Nodes.remove(nodo_eliminar)
+        self.adj_matrix.pop(pos)
+        for node in self.adj_matrix:
+            node.pop(pos)
+        return self.adj_matrix
+    
     def __repr__(self):
         rep_str = ""
         for i in self.adj_matrix:
@@ -56,10 +82,16 @@ class Graph:
         return rep_str
 
 g = Graph()
-g.add_vertex(1)
-g.add_vertex(2)
-g.add_vertex(4)
-g.add_vertex(6)
-g.add_vertex(9)
-g.add_edge(1,4)
-print(g)
+g.add_vertex("A")
+g.add_vertex("E")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
+g.add_edge("A", "E")
+g.add_edge("A", "B")
+g.add_edge("E", "B")
+g.add_edge("C", "E")
+g.add_edge("C", "C")
+g.add_edge("D", "C")
+
+print(g.eliminar_nodo("E"))
