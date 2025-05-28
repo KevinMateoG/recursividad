@@ -100,10 +100,42 @@ class Graph:
         if self.Nodes.index(v1) == self.Nodes.index(v2):
             ruta.append(visitar[:])
             return visitar
-        idx = self.Nodes.index(v1)
-        for vecino in self.adj_matrix:
-            if vecino[idx] != 0:
-                self.ver_rutas(vecino, v2, ruta, visitar)
+        else:
+            if isinstance(v1, tuple):
+                idx = self.Nodes.index(v1[0])
+                
+            else:
+                idx = self.Nodes.index(v1)
+            
+            for cont ,vecino in enumerate(self.adj_matrix[idx]):
+                if vecino != 0:
+                    self.ver_rutas(self.Nodes[cont], v2, ruta, visitar)
+                    visitar.pop()
+        return visitar
+    
+    def ver_rutas_con_peso(self, v1, v2, ruta, visitar=[], contador=0):
+        if v1 not in self.Nodes and v2 not in self.Nodes:
+            return
+        
+        if v1 not in visitar:
+            visitar.append(v1)
+        
+        if self.Nodes.index(v1) == self.Nodes.index(v2):
+            ruta.append((visitar[:], contador))
+            return visitar
+        else:
+            if isinstance(v1, tuple):
+                idx = self.Nodes.index(v1[0])
+                
+            else:
+                idx = self.Nodes.index(v1)
+            for cont ,vecino in enumerate(self.adj_matrix[idx]):
+                if vecino != 0:
+                    self.ver_rutas_con_peso(self.Nodes[cont], v2, ruta, visitar, contador + vecino)
+                    visitar.pop()
+        return visitar
+    
+        
     def __repr__(self):
         rep_str = ""
         for i in self.adj_matrix:
@@ -112,7 +144,7 @@ class Graph:
         return rep_str
 
 g = Graph()
-g.add_vertex("A")
+"""g.add_vertex("A")
 g.add_vertex("E")
 g.add_vertex("B")
 g.add_vertex("C")
@@ -122,8 +154,20 @@ g.add_edge("A", "B", True)
 g.add_edge("E", "B", True)
 g.add_edge("C", "E", True)
 g.add_edge("C", "C", True)
-g.add_edge("D", "C", True)
+g.add_edge("D", "C", True)"""
 
+g.add_vertex("A")
+g.add_vertex("E")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
+g.add_edge("A", "C",wigth=10)
+g.add_edge("A", "E",wigth=20)
+g.add_edge("E", "B",wigth=30)
+g.add_edge("E", "D",wigth=40)
+g.add_edge("B", "C",wigth=10)
+g.add_edge("B", "D",wigth=20)
+g.add_edge("D", "C",wigth=30)
 """g = Graph()
 g.add_vertex("A")
 g.add_vertex("E")
@@ -136,5 +180,6 @@ g.add_edge("E", "B")
 g.add_edge("C", "E")
 g.add_edge("C", "C")
 g.add_edge("D", "C")"""
-
-print(g.primer_conjunto_matriz())
+ruta = []
+print(g.ver_rutas_con_peso("A", "C",ruta))
+print(ruta)
