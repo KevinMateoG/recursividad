@@ -74,6 +74,36 @@ class Graph:
             node.pop(pos)
         return self.adj_matrix
     
+    def primer_conjunto_matriz(self):
+        visitado = [False] * len(self.adj_matrix)
+        cont = 0
+
+        for nodo in range(len(self.adj_matrix)):
+            if not visitado[nodo]:
+                self.conjunto_matriz(nodo, visitado)
+                cont += 1
+        return cont
+
+    def conjunto_matriz(self, nodo, visitado):
+        visitado[nodo] = True
+        for vecino in range(len(self.adj_matrix)):
+            if self.adj_matrix[nodo][vecino] != 0 and not visitado[vecino]:
+                self.conjunto_matriz(vecino, visitado)
+
+    def ver_rutas(self, v1, v2, ruta, visitar=[]):
+        if v1 not in self.Nodes and v2 not in self.Nodes:
+            return
+        
+        if v1 not in visitar:
+            visitar.append(v1)
+        
+        if self.Nodes.index(v1) == self.Nodes.index(v2):
+            ruta.append(visitar[:])
+            return visitar
+        idx = self.Nodes.index(v1)
+        for vecino in self.adj_matrix:
+            if vecino[idx] != 0:
+                self.ver_rutas(vecino, v2, ruta, visitar)
     def __repr__(self):
         rep_str = ""
         for i in self.adj_matrix:
@@ -87,11 +117,24 @@ g.add_vertex("E")
 g.add_vertex("B")
 g.add_vertex("C")
 g.add_vertex("D")
+g.add_edge("A", "E", True)
+g.add_edge("A", "B", True)
+g.add_edge("E", "B", True)
+g.add_edge("C", "E", True)
+g.add_edge("C", "C", True)
+g.add_edge("D", "C", True)
+
+"""g = Graph()
+g.add_vertex("A")
+g.add_vertex("E")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
 g.add_edge("A", "E")
 g.add_edge("A", "B")
 g.add_edge("E", "B")
 g.add_edge("C", "E")
 g.add_edge("C", "C")
-g.add_edge("D", "C")
+g.add_edge("D", "C")"""
 
-print(g.eliminar_nodo("E"))
+print(g.primer_conjunto_matriz())

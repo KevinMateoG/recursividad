@@ -148,23 +148,48 @@ class Graph:
             self.conjunto(node)
         return visitado
 
-            
     
+    def ver_rutas(self, v1, v2, ruta, visitar=[]):
+        if v1 not in self.adj_list and v2 not in self.adj_list:
+            return
+        
+        if v1 not in visitar:
+            visitar.append(v1)
+        
+        if v1 == v2:
+            ruta.append(visitar[:])
+            return visitar
+        else:
+            for vecionos in self.adj_list[v1]:
+                self.ver_rutas(vecionos, v2, ruta, visitar)
+                visitar.pop()
+        return visitar
+    
+    def ver_rutas_con_peso(self, v1, v2, ruta, visitar=[], contar=0):
+        if v1 not in self.adj_list or v2 not in self.adj_list:
+            return
+        
+        if v1 not in visitar:
+            visitar.append(v1)
+        
+        if v1 == v2:
+            ruta.append((visitar[:], contar))
+        
+        else:
+            if isinstance(v1, tuple):
+                idx = v1[0]
+            else:
+                idx = v1
+            
+            for vecino, peso in self.adj_list[idx]:
+                self.ver_rutas_con_peso(vecino, v2, ruta, visitar, contar + peso)
+                visitar.pop()
+        return visitar
+
+
     def __repr__(self):
         return str(self.adj_list)
 
-g = Graph()
-g.add_vertex("A")
-g.add_vertex("E")
-g.add_vertex("B")
-g.add_vertex("C")
-g.add_vertex("D")
-g.add_edge("A", "E", True)
-g.add_edge("A", "B", True)
-g.add_edge("E", "B", True)
-g.add_edge("C", "E", True)
-g.add_edge("C", "C", True)
-g.add_edge("D", "C", True)
 # 5 + 3
 
 """g.add_vertex("a")
@@ -197,6 +222,21 @@ g.add_edge("x", "h")
 g.add_edge("l", "a")
 g.add_edge("a", "o")
 g.add_edge("a", "l")"""
+g = Graph()
 
-print(g)
-print(g.primer_conjunto())
+g.add_vertex("A")
+g.add_vertex("E")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
+g.add_edge("A", "C",wigth=10)
+g.add_edge("A", "E",wigth=20)
+g.add_edge("E", "B",wigth=30)
+g.add_edge("E", "D",wigth=40)
+g.add_edge("B", "C",wigth=10)
+g.add_edge("B", "D",wigth=20)
+g.add_edge("D", "C",wigth=30)
+ruta = []
+#visitar = []
+g.ver_rutas_con_peso("A", "C", ruta)
+print(ruta)
