@@ -135,7 +135,16 @@ class Graph:
                     visitar.pop()
         return visitar
     
-        
+    def contar_islas():
+        ...
+    
+    def existe_conexion(self,v1, v2):
+        if v1 not in self.Nodes or v2 not in self.Nodes:
+            return False
+        if self.adj_matrix[self.Nodes.index(v1)][self.Nodes.index(v2)] or self.adj_matrix[self.Nodes.index(v2)][self.Nodes.index(v1)]:
+            return True
+        return False
+    
     def __repr__(self):
         rep_str = ""
         for i in self.adj_matrix:
@@ -144,6 +153,16 @@ class Graph:
         return rep_str
 
 g = Graph()
+
+g.add_vertex(0)
+g.add_vertex(1)
+g.add_vertex(2)
+g.add_vertex(3)
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 2)
+g.add_edge(2, 3)
+print(g.existe_conexion(0, 3))
 """g.add_vertex("A")
 g.add_vertex("E")
 g.add_vertex("B")
@@ -156,7 +175,7 @@ g.add_edge("C", "E", True)
 g.add_edge("C", "C", True)
 g.add_edge("D", "C", True)"""
 
-g.add_vertex("A")
+"""g.add_vertex("A")
 g.add_vertex("E")
 g.add_vertex("B")
 g.add_vertex("C")
@@ -167,7 +186,8 @@ g.add_edge("E", "B",wigth=30)
 g.add_edge("E", "D",wigth=40)
 g.add_edge("B", "C",wigth=10)
 g.add_edge("B", "D",wigth=20)
-g.add_edge("D", "C",wigth=30)
+g.add_edge("D", "C",wigth=30)"""
+
 """g = Graph()
 g.add_vertex("A")
 g.add_vertex("E")
@@ -181,5 +201,6 @@ g.add_edge("C", "E")
 g.add_edge("C", "C")
 g.add_edge("D", "C")"""
 ruta = []
-print(g.ver_rutas_con_peso("A", "C",ruta))
-print(ruta)
+
+#print(g.ver_rutas_con_peso("A", "C",ruta))
+#print(ruta)

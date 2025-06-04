@@ -185,6 +185,15 @@ class Graph:
                 self.ver_rutas_con_peso(vecino, v2, ruta, visitar, contar + peso)
                 visitar.pop()
         return visitar
+    
+    def existe_conexion(self, v1, v2):
+        if v1 not in self.adj_list or v2 not in self.adj_list:
+            return
+        if v2 in self.adj_list[v1] or v1 in self.adj_list[v2]:
+            return True
+        return False
+
+        ...
 
 
     def __repr__(self):
@@ -225,6 +234,15 @@ g.add_edge("a", "l")"""
 g = Graph()
 
 g.add_vertex("A")
+g.add_vertex("B")
+g.add_vertex("C")
+g.add_vertex("D")
+g.add_edge("A", "B", True)
+g.add_edge("A", "C", True)
+g.add_edge("B", "D", True)
+print(g.existe_conexion("A", "D"))
+
+"""g.add_vertex("A")
 g.add_vertex("E")
 g.add_vertex("B")
 g.add_vertex("C")
@@ -235,8 +253,7 @@ g.add_edge("E", "B",wigth=30)
 g.add_edge("E", "D",wigth=40)
 g.add_edge("B", "C",wigth=10)
 g.add_edge("B", "D",wigth=20)
-g.add_edge("D", "C",wigth=30)
-ruta = []
-#visitar = []
-g.ver_rutas_con_peso("A", "C", ruta)
-print(ruta)
+g.add_edge("D", "C",wigth=30)"""
+#ruta = []
+#g.ver_rutas_con_peso("A", "C", ruta)
+#print(ruta)
