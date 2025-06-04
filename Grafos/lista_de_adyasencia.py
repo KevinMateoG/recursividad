@@ -1,4 +1,6 @@
-global cont 
+import sys
+sys.path.append("Grafos")
+from matriz_de_adyasencia import *
 class Graph:
     def __init__(self):
         self.adj_list: dict[int, list[int]] = {}
@@ -193,6 +195,15 @@ class Graph:
             return True
         return False
 
+    def convertir_a_matriz(self):
+        nuevo_grafo = Graph_matriz()
+        for vertice in self.adj_list:
+            nuevo_grafo.add_vertex(vertice)
+        
+        for vertice in self.adj_list:
+            for value  in self.adj_list[vertice]:
+                nuevo_grafo.add_edge(vertice, value)
+        return nuevo_grafo
         ...
 
 
@@ -240,7 +251,7 @@ g.add_vertex("D")
 g.add_edge("A", "B", True)
 g.add_edge("A", "C", True)
 g.add_edge("B", "D", True)
-print(g.existe_conexion("A", "D"))
+print(g.convertir_a_matriz())
 
 """g.add_vertex("A")
 g.add_vertex("E")

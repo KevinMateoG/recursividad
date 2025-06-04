@@ -1,4 +1,4 @@
-class Graph:
+class Graph_matriz:
     def __init__(self):
         self.size = 0
         self.Nodes: list[int] = []
@@ -152,7 +152,7 @@ class Graph:
         
         return rep_str
 
-g = Graph()
+g = Graph_matriz()
 
 g.add_vertex(0)
 g.add_vertex(1)
