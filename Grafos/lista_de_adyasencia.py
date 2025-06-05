@@ -1,6 +1,3 @@
-import sys
-sys.path.append("Grafos")
-from matriz_de_adyasencia import *
 class Graph:
     def __init__(self):
         self.adj_list: dict[int, list[int]] = {}
@@ -55,27 +52,24 @@ class Graph:
 
             por_visitar.extend(self.adj_list[actual])
         return visitado
-    
-    def verificar_str(self, palabra, formar="", cont = 0, visitado=[], por_visitar=None):
-        if por_visitar is None:
-            por_visitar = [palabra[0]]
-        if palabra[0] not in self.adj_list:
+
+    def verificar_str(self, palabra, formar = "", vertex = None, cont=0):
+        if palabra[cont] not in self.adj_list:
             return False
+        if vertex is None:
+            vertex = palabra[cont]
         
-        actual = por_visitar.pop()
-        if actual in palabra:
-            visitado.append(actual)
-            formar += actual
-            if formar == palabra:
-                return True
-            if palabra[cont+1] in self.adj_list[actual]:
-                por_visitar.extend(self.adj_list[actual])
-            if palabra[cont+1] in por_visitar:
-                por_visitar = [palabra[cont+1]]
-        cont += 1
-        if self.verificar_str(palabra, formar, cont, visitado, por_visitar):
-            return True
+        for node in self.adj_list:
+            if node == vertex:
+                formar += vertex
+                if formar == palabra:
+                        return True
+                for nodes in self.adj_list[node]:
+                    if nodes == palabra[cont+1]:
+                        if self.verificar_str(palabra, formar, nodes, cont+1):
+                            return True
         return False
+
     
     def verificar_ciclos(self, value, visitado: list=[], padre=None):
         visitado.append(value)
@@ -96,7 +90,7 @@ class Graph:
             
             if vecino == padre:
                 return (True, cont+1)
-        return (False,cont)
+        return (False, cont)
     
     def tiene_ciclo(self):
         for vertice in self.adj_list:
@@ -196,7 +190,7 @@ class Graph:
         return False
 
     def convertir_a_matriz(self):
-        nuevo_grafo = Graph_matriz()
+        nuevo_grafo = []
         for vertice in self.adj_list:
             nuevo_grafo.add_vertex(vertice)
         
@@ -210,61 +204,40 @@ class Graph:
     def __repr__(self):
         return str(self.adj_list)
 
-# 5 + 3
-
-"""g.add_vertex("a")
-g.add_vertex("b")
-g.add_vertex("d")
-g.add_vertex("c")
-g.add_vertex("e")
-g.add_vertex("x")
-g.add_edge("a", "b")
-g.add_edge("b", "d")
-g.add_edge("d", "b")
-g.add_edge("b", "e")
-g.add_edge("e", "c")
-g.add_edge("e", "b")
-g.add_edge("c", "x")
-g.add_edge("c", "d")
-g.add_edge("d", "a")"""
-"""g.add_vertex("h")
-g.add_vertex("o")
-g.add_vertex("l")
-g.add_vertex("a")
-g.add_vertex("x")
-g.add_vertex("y")
-g.add_edge("h", "o")
-g.add_edge("h", "y")
-g.add_edge("h", "x")
-g.add_edge("o", "l")
-g.add_edge("o","x")
-g.add_edge("x", "h")
-g.add_edge("l", "a")
-g.add_edge("a", "o")
-g.add_edge("a", "l")"""
 g = Graph()
+#g.adj_list = {
+#    'A': ['B', 'C'],
+#    'B': ['D'],
+#    'C': ['D'],
+#    'D': []
+#}
+g.adj_list = {
+    'A': ['B'],
+    'B': ['C'],
+    'C': ['D'],
+    'D': []
+}
+g = Graph()
+g.add_edge("H", "A")
+g.add_edge("H", "O")
+g.add_edge("O", "X")
+g.add_edge("O", "A")
+g.add_edge("O", "L")
+g.add_edge("O", "O")
+g.add_edge("L", "A")
+g.add_edge("L", "Z")
+g.add_edge("L", "O")
 
-g.add_vertex("A")
-g.add_vertex("B")
-g.add_vertex("C")
-g.add_vertex("D")
-g.add_edge("A", "B", True)
-g.add_edge("A", "C", True)
-g.add_edge("B", "D", True)
-print(g.convertir_a_matriz())
-
+#s = "ABD"
+#s = "ACD"
+print(g.verificar_str("HOLLA"))
 """g.add_vertex("A")
-g.add_vertex("E")
 g.add_vertex("B")
 g.add_vertex("C")
 g.add_vertex("D")
-g.add_edge("A", "C",wigth=10)
-g.add_edge("A", "E",wigth=20)
-g.add_edge("E", "B",wigth=30)
-g.add_edge("E", "D",wigth=40)
-g.add_edge("B", "C",wigth=10)
-g.add_edge("B", "D",wigth=20)
-g.add_edge("D", "C",wigth=30)"""
+g.add_edge("A", "B")
+g.add_edge("A", "C")
+g.add_edge("B", "D")"""
 #ruta = []
 #g.ver_rutas_con_peso("A", "C", ruta)
 #print(ruta)
