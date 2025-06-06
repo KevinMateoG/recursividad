@@ -25,18 +25,14 @@ class Graph:
         w = vertex2 if wigth is None else (vertex2, wigth)
         if vertex2 not in self.adj_list[vertex1]:
             self.adj_list[vertex1].append(w)
-    
-    def dfs(self, start):
-        visitado = []
-        recorrido = self.dfs_estructura(start, visitado)
-        return recorrido
 
-    def dfs_estructura(self, start, vistado: list):
+    def dfs_estructura(self, start, vistado: list=[]):
         if start not in vistado:
             vistado.append(start)
         
         for i in self.adj_list[start]:
-            self.dfs_estructura(i, vistado)
+            if i not in vistado:
+                self.dfs_estructura(i, vistado)
         return vistado
 
     def bfs(self, inicio):
@@ -98,12 +94,6 @@ class Graph:
                 
                 return True
     
-    def cont_ciclo(self):
-        for vertice in self.adj_list:
-            if self.contat:
-                
-                return True
-    
     def grado_nodo(self, nodo_elegido, cont=0, entrad=True):
         if nodo_elegido not in self.adj_list:
             return 
@@ -143,7 +133,6 @@ class Graph:
         for node in self.adj_list[inicio]:
             self.conjunto(node)
         return visitado
-
     
     def ver_rutas(self, v1, v2, ruta, visitar=[]):
         if v1 not in self.adj_list and v2 not in self.adj_list:
@@ -198,9 +187,31 @@ class Graph:
             for value  in self.adj_list[vertice]:
                 nuevo_grafo.add_edge(vertice, value)
         return nuevo_grafo
-        ...
-
-
+    
+    def mayor_alcance(self):
+        visitar = {}
+        maximo = 0
+        valor = None
+        for nodo in self.adj_list:
+            visitar[nodo] = len(self.adj_list[nodo])
+        for d in visitar:
+            if maximo < visitar[d]:
+                valor = d
+                maximo = visitar[d]
+        return valor
+    
+    def ciclo(self, v1=None, v2=None, visitado=[]):
+        if v1 is None:
+            v1 = 0
+        visitado.append(v1)
+        for node in self.adj_list[v1]:
+            if node not in visitado:
+                if self.ciclo(node, v1, visitado):
+                    return True
+            if node == v2:
+                return True
+        return False
+    
     def __repr__(self):
         return str(self.adj_list)
 
@@ -211,26 +222,22 @@ g = Graph()
 #    'C': ['D'],
 #    'D': []
 #}
-g.adj_list = {
-    'A': ['B'],
-    'B': ['C'],
-    'C': ['D'],
-    'D': []
-}
-g = Graph()
-g.add_edge("H", "A")
-g.add_edge("H", "O")
-g.add_edge("O", "X")
-g.add_edge("O", "A")
-g.add_edge("O", "L")
-g.add_edge("O", "O")
-g.add_edge("L", "A")
-g.add_edge("L", "Z")
-g.add_edge("L", "O")
 
-#s = "ABD"
-#s = "ACD"
-print(g.verificar_str("HOLLA"))
+#g.adj_list = {
+#    'A': ['B'],
+#    'B': ['C'],
+#    'C': ['D'],
+#    'D': []
+#}
+
+g.adj_list = {
+  0: [1, 2],
+  1: [0, 2],
+  2: [0, 1, 3],
+  3: [2]
+}
+print(g)
+print(g.bfs(2))
 """g.add_vertex("A")
 g.add_vertex("B")
 g.add_vertex("C")

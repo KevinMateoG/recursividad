@@ -154,14 +154,7 @@ class Graph_matriz:
 
 g = Graph_matriz()
 
-g.add_vertex(0)
-g.add_vertex(1)
-g.add_vertex(2)
-g.add_vertex(3)
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(2, 3)
+
 print(g.existe_conexion(0, 3))
 """g.add_vertex("A")
 g.add_vertex("E")
