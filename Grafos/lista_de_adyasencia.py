@@ -143,12 +143,12 @@ class Graph:
         
         if v1 == v2:
             ruta.append(visitar[:])
-            return visitar
+            return ruta
         else:
             for vecionos in self.adj_list[v1]:
                 self.ver_rutas(vecionos, v2, ruta, visitar)
                 visitar.pop()
-        return visitar
+        return ruta
     
     def ver_rutas_con_peso(self, v1, v2, ruta, visitar=[], contar=0):
         if v1 not in self.adj_list or v2 not in self.adj_list:
@@ -231,20 +231,11 @@ g = Graph()
 #}
 
 g.adj_list = {
-  0: [1, 2],
-  1: [0, 2],
-  2: [0, 1, 3],
-  3: [2]
+  0: [1,2],
+  1: [3],
+  2: [3],
+  3: []
 }
+ruta = []
 print(g)
-print(g.bfs(2))
-"""g.add_vertex("A")
-g.add_vertex("B")
-g.add_vertex("C")
-g.add_vertex("D")
-g.add_edge("A", "B")
-g.add_edge("A", "C")
-g.add_edge("B", "D")"""
-#ruta = []
-#g.ver_rutas_con_peso("A", "C", ruta)
-#print(ruta)
+print(g.ver_rutas(0,3,ruta))
