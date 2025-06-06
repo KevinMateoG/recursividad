@@ -47,4 +47,4 @@ grafo = {
 
 inicio = 0
 
-print(numero_de_caminos(grafo, inicio, fin))
+print(numero_de_caminos(grafo, inicio))
